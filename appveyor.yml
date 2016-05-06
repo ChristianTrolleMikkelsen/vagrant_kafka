@@ -1,0 +1,21 @@
+version: 2.0.{build}
+
+init:
+  - choco install virtualbox
+  - choco install vagrant
+
+install: 
+  - set PATH=C:\HashiCorp\Vagrant\bin;%PATH%
+  - vagrant init ChristianTrolleMikkelsen/kafkacluster
+  - vagrant up
+
+build_script:
+  - cmd: vagrant up
+  - cmd: vagrant package --output kafka_cluster.box --vagrantfile DefaultVagrantfile
+  - ps: Write-Host "Box size is "  (Get-Item .\kafka_cluster.box).Length
+  - cmd: vagrant destroy -f
+  - cmd: vagrant box add test kafka_cluster.box
+  - cmd: mkdir test
+  - cmd: cd test
+  - cmd: vagrant init test
+  - cmd: vagrant up
