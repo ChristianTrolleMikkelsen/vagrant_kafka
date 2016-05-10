@@ -173,9 +173,7 @@ Vagrant.configure(2) do |config|
 	chmod -R 777 /etc/kafka3
 
 	echo "Script files for vagrant"
-	mkdir /home/vagrant -p
 	sudo cp *.sh /home/vagrant
-	chmod -R 777 /home/vagrant
 
 	echo "Cleanup"
 	sudo apt-get clean
