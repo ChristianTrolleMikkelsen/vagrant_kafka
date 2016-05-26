@@ -6,6 +6,7 @@ attempt=0
 until [ $attempt -ge 20 ]
 do
 	if [ $(ps -p $pid | wc -l) -gt 1 ] ; then
+
 		echo "  - $pid not stopped yet... $attempt"
 		sleep 1
 	else
@@ -16,6 +17,7 @@ do
 done
 
 if [ $(ps -p $pid | wc -l) -gt 1 ] ; then
+
 	echo "  - Warning: $pid was not stopped, using kill 9..."
 	sudo kill -9 $pid
 	sleep 1
