@@ -51,6 +51,7 @@ function Build-Box
 {
     vagrant destroy -f
     vagrant up
+    rm kafka_cluster.box -Force -ErrorAction SilentlyContinue
     vagrant package --output kafka_cluster.box --vagrantfile DefaultVagrantfile
     vagrant destroy -f
 }
