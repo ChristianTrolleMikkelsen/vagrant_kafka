@@ -1,6 +1,11 @@
 pid=$(ps -o pid,cmd ax | grep -i ".*/etc/kafka" | grep -v grep | shuf | xargs | cut -d \  -f 1)
-echo "Killing Kafka ($pid)"
-echo $pid | sudo xargs kill -9
+
+if [ $(ps -p $pid | wc -l) -gt 1 ] ; then
+	echo "Killing Kafka ($pid)"
+	echo $pid | sudo xargs kill -9
+else
+	echo "No Kafka running to kill"
+fi
 
 attempt=0
 until [ $attempt -ge 20 ]

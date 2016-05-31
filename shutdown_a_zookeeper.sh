@@ -1,6 +1,11 @@
 pid=$(ps -o pid,cmd ax | grep -i ".*/etc/zookeeper$1" | grep -v grep | xargs | cut -d \  -f 1)
-echo "Stopping Zookeeper$1 ($pid)"
-echo $pid | sudo xargs kill -SIGTERM
+
+if [ $(ps -p $pid | wc -l) -gt 1 ] ; then
+	echo "Stopping Zookeeper$1 ($pid)"
+	echo $pid | sudo xargs kill -SIGTERM
+else
+	echo "No Zookeeper$1 running to stop"
+fi
 
 attempt=0
 until [ $attempt -ge 20 ]
