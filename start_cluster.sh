@@ -6,13 +6,13 @@ sudo /etc/zookeeper2/bin/zookeeper-server-start.sh -daemon /etc/zookeeper2/confi
 sleep 1
 echo "Launching Zookeeper 3"
 sudo /etc/zookeeper3/bin/zookeeper-server-start.sh -daemon /etc/zookeeper3/config/zookeeper.properties
-sleep 1
+sleep 6
 echo "Launching Kafka 1"
 sudo /etc/kafka1/bin/kafka-server-start.sh -daemon /etc/kafka1/config/server.properties
-sleep 1
+sleep 2
 echo "Launching Kafka 2"
 sudo /etc/kafka2/bin/kafka-server-start.sh -daemon /etc/kafka2/config/server.properties
-sleep 1
+sleep 2
 echo "Launching Kafka 3"
 sudo /etc/kafka3/bin/kafka-server-start.sh -daemon /etc/kafka3/config/server.properties
 sleep 1

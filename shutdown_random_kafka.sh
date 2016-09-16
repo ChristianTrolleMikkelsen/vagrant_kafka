@@ -1,6 +1,6 @@
 pid=$(ps -o pid,cmd ax | grep -i ".*/etc/kafka" | grep -v grep | shuf | xargs | cut -d \  -f 1)
 
-if [ $(ps -p $pid | wc -l) -gt 1 ] ; then
+if [ -n "$pid" ] && [ $(ps -p $pid | wc -l) -gt 1 ] ; then
 	echo "Stopping Kafka ($pid)"
 	echo $pid | sudo xargs kill -SIGTERM
 else
@@ -8,9 +8,9 @@ else
 fi
 
 attempt=0
-until [ $attempt -ge 20 ]
+until [ $attempt -ge 60 ]
 do
-	if [ $(ps -p $pid | wc -l) -gt 1 ] ; then
+	if [ -n "$pid" ] && [ $(ps -p $pid | wc -l) -gt 1 ] ; then
 
 		echo "  - $pid not stopped yet... $attempt"
 		sleep 1
@@ -21,7 +21,7 @@ do
 	attempt=$(($attempt+1))
 done
 
-if [ $(ps -p $pid | wc -l) -gt 1 ] ; then
+if [ -n "$pid" ] && [ $(ps -p $pid | wc -l) -gt 1 ] ; then
 
 	echo "  - Warning: $pid was not stopped, using kill 9..."
 	sudo kill -9 $pid
