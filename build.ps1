@@ -11,7 +11,7 @@ function Install-OpenSSH
 {
     if(((choco.exe search -localonly win32-openssh) -like "win32-openssh*").Count -eq 0)
     {
-        choco install win32-openssh -y #-version 2016.05.15
+        choco install win32-openssh -y -version 2016.05.15 --force --ignore-checksums
     }
     else
     {
@@ -25,7 +25,7 @@ function Install-VBox
 {
     if(((choco.exe search -localonly virtualbox) -like "virtualbox*").Count -eq 0)
     {
-        choco install virtualbox -y #-version 5.0.16.105871
+        choco install virtualbox -y -version 5.0.16.105871 --force --ignore-checksums
     }
     else
     {
@@ -37,7 +37,7 @@ function Install-Vagrant
 {
     if(((choco.exe search -localonly vagrant) -like "vagrant*").Count -eq 0)
     {
-        choco install vagrant -y #-version 1.8.1.20160318
+        choco install vagrant -y -version 1.8.1.20160318 --force --ignore-checksums
     }
     else
     {
