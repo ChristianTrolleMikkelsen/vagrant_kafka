@@ -29,7 +29,7 @@ function Install-VBox
     }
     else
     {
-        choco upgrade virtualbox -y
+        choco install virtualbox -y -version 5.0.16.105871 --force
     }
 }
 
@@ -41,23 +41,54 @@ function Install-Vagrant
     }
     else
     {
+        choco install vagrant -y -version 1.8.1.20160318 --force
         #hoco upgrade vagrant -y
     }
  
     $env:Path += ";C:\HashiCorp\Vagrant\bin"
 }
 
-function Build-Box
+function Build-Box-v9
 {
+    $version = "v9"
+    $vagrantFile = "Vagrantfile_"+$version
+    $vagrantBox = "kafka_cluster.box"
+    
+    rm Vagrantfile -Force -ErrorAction SilentlyContinue
+    cp $vagrantFile "Vagrantfile"
+
     vagrant destroy -f
     vagrant up
-    rm kafka_cluster.box -Force -ErrorAction SilentlyContinue
-    vagrant package --output kafka_cluster.box --vagrantfile DefaultVagrantfile
+
+    rm $vagrantBox -Force -ErrorAction SilentlyContinue
+
+    vagrant package --output $vagrantBox --vagrantfile DefaultVagrantfile
     vagrant destroy -f
 }
 
-Install-Choco
-Install-OpenSSH
-Install-VBox
-Install-Vagrant
-Build-Box
+function Build-Box
+{
+    param([string] $version)
+
+    $vagrantFile = "Vagrantfile_"+$version
+    $vagrantBox = "kafka_cluster_"+$version+".box"
+    
+    rm Vagrantfile -Force -ErrorAction SilentlyContinue
+    cp $vagrantFile "Vagrantfile"
+
+    vagrant destroy -f
+    vagrant up
+
+    rm $vagrantBox -Force -ErrorAction SilentlyContinue
+
+    vagrant package --output $vagrantBox --vagrantfile DefaultVagrantfile
+    vagrant destroy -f
+}
+
+#Install-Choco
+#Install-OpenSSH
+#Install-VBox
+#Install-Vagrant
+#Build-Box-v9
+Build-Box v9
+Build-Box v10
