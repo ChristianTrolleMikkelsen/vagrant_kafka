@@ -1,4 +1,3 @@
-ps ax | grep java | grep -v grep | awk '{print $1}'
 numberOfProcesses=$(ps ax | grep java | grep -v grep | awk '{print $1}' | wc -l)
 
 if [ $numberOfProcesses -eq 6 ] ; then
@@ -37,7 +36,6 @@ else
 		sudo /etc/kafka3/bin/kafka-server-start.sh -daemon /etc/kafka3/config/server.properties
 		sleep 2
 
-		ps ax | grep java | grep -v grep | awk '{print $1}'
 		numberOfProcesses=$(ps ax | grep java | grep -v grep | awk '{print $1}' | wc -l)
 
 		if [ $numberOfProcesses -eq 6 ] ; then
