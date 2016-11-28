@@ -72,9 +72,13 @@ function Build-Box
 
     $vagrantFile = "Vagrantfile_"+$version
     $vagrantBox = "kafka_cluster_"+$version+".box"
+    $vagrantDefaultFile = "DefaultVagrantfile_"+$version
     
-    rm Vagrantfile -Force -ErrorAction SilentlyContinue
+    rm "Vagrantfile" -Force -ErrorAction SilentlyContinue
     cp $vagrantFile "Vagrantfile"
+
+    rm "DefaultVagrantfile" -Force -ErrorAction SilentlyContinue
+    cp $vagrantDefaultFile "DefaultVagrantfile"
 
     vagrant destroy -f
     vagrant up

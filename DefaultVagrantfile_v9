@@ -1,0 +1,17 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.hostname="kafkacluster-v9"
+  config.vm.box = "kafka_cluster_v9"
+
+  config.vm.network "private_network", ip: "192.168.100.100"
+
+  config.vm.provider "virtualbox" do |vb|
+  vb.name = "kafka_cluster_v9"
+  vb.memory = "2048"
+  end
+  config.vm.provision "shell", inline: <<-SHELL
+  sudo ./start_cluster.sh
+  SHELL
+end
